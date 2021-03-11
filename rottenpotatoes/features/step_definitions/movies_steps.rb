@@ -17,6 +17,12 @@ When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
   end
 end
 
+Then /^the director of "(.+)" should be "(.+)"/ do |movie_name, director|
+  movie = Movie.find_by(title: movie_name)
+  visit movie_path(movie)
+  expect(page.body).to match(/Director:\s#{director}/)
+end
+
 Then /I should see all the movies/ do
   # Make sure that all the movies in the app are visible in the table
   Movie.all.each do |movie|
